@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour
 {
+
+    public Vector3 centerPoint;
+    int center = 1;
+
     [Header("Inscribed")]
     public GameObject projectilePrefab;
     public GameObject projLinePrefab;
+    public LineRenderer rubber;
+    public AudioSource audioSource;
 
     [Header("Dynamic")]
     public GameObject launchPoint;
@@ -22,6 +28,8 @@ public class Slingshot : MonoBehaviour
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive(false);
         launchPos = launchPointTrans.position;
+        centerPoint = rubber.GetPosition(center);
+        
     }
     void OnMouseEnter()
     {
@@ -61,17 +69,20 @@ public class Slingshot : MonoBehaviour
 
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
+        rubber.SetPosition(center, projPos);
 
         if (Input.GetMouseButtonUp(0))
         {
             aimingMode = false;
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
+            audioSource.Play();
             projRB.isKinematic = false;
             projRB.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            projRB.velocity = -mouseDelta * velocityMult;
+            projRB.velocity = -mouseDelta * -velocityMult;
             FollowCam.SWITCH_VIEW(FollowCam.eView.slingshot);
             FollowCam.POI = projectile;
             Instantiate<GameObject>(projLinePrefab, projectile.transform);
+            rubber.SetPosition(center, centerPoint);
             projectile = null;
             MissionDemolition.SHOT_FIRED();
         }

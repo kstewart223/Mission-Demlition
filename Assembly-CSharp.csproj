@@ -65,6 +65,7 @@
     <Compile Include="Assets/__Scripts/ProjectileLine.cs" />
     <Compile Include="Assets/__Scripts/Projectile.cs" />
     <Compile Include="Assets/__Scripts/Goal.cs" />
+    <Compile Include="Assets/__Scripts/GameOver.cs" />
     <Compile Include="Assets/__Scripts/MissionDemolition.cs" />
     <Compile Include="Assets/__Scripts/RigidbodySleep.cs" />
     <Compile Include="Assets/__Scripts/FollowCam.cs" />
